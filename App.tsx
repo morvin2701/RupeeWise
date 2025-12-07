@@ -65,6 +65,10 @@ const App: React.FC = () => {
     setDebts(prev => prev.filter(d => d.id !== id));
   };
 
+  const handleEditDebt = (id: string, updates: Partial<Omit<Debt, 'id'>>) => {
+    setDebts(prev => prev.map(d => d.id === id ? { ...d, ...updates } : d));
+  };
+
   const handleUpdateBudget = (category: string, limit: number) => {
     setBudgets(prev => {
       const existing = prev.findIndex(b => b.category === category);
@@ -147,7 +151,7 @@ const App: React.FC = () => {
       case 'transactions':
         return <Transactions transactions={transactions} onAddTransaction={handleAddTransaction} onDeleteTransaction={handleDeleteTransaction} />;
       case 'debts':
-        return <DebtManager debts={debts} onAddDebt={handleAddDebt} onTogglePaid={handleToggleDebtPaid} onDeleteDebt={handleDeleteDebt} />;
+        return <DebtManager debts={debts} onAddDebt={handleAddDebt} onEditDebt={handleEditDebt} onTogglePaid={handleToggleDebtPaid} onDeleteDebt={handleDeleteDebt} />;
       case 'budget':
         return <BudgetPlanner transactions={transactions} debts={debts} budgets={budgets} onUpdateBudget={handleUpdateBudget} />;
       default:
