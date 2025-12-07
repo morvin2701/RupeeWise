@@ -1,0 +1,5 @@
+{
+  "name": "RupeeWise Budget Planner",
+  "description": "A smart monthly budget planner with debt tracking and AI financial insights using Gemini.",
+  "requestFramePermissions": []
+}
