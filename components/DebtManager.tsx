@@ -24,6 +24,9 @@ const DebtManager: React.FC<DebtManagerProps> = ({ debts, onAddDebt, onEditDebt,
   // State for editing debts
   const [editingDebtId, setEditingDebtId] = useState<string | null>(null);
   const [editFormData, setEditFormData] = useState<Partial<Debt>>({});
+  
+  // State for success feedback
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +39,10 @@ const DebtManager: React.FC<DebtManagerProps> = ({ debts, onAddDebt, onEditDebt,
       type,
       dueDate: dueDate || undefined,
     });
+
+    // Show success feedback
+    setShowSuccess(true);
+    setTimeout(() => setShowSuccess(false), 3000);
 
     setPersonName('');
     setDescription('');
@@ -158,9 +165,16 @@ const DebtManager: React.FC<DebtManagerProps> = ({ debts, onAddDebt, onEditDebt,
 
             <button
               type="submit"
-              className="w-full flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium"
+              className="w-full flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium relative"
             >
               <UserPlus size={18} className="mr-2" /> Add Record
+              {showSuccess && (
+                <span className="absolute inset-0 flex items-center justify-center bg-green-500 text-white rounded-lg transition-opacity duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              )}
             </button>
           </form>
         </div>

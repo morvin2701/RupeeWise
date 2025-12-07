@@ -16,6 +16,9 @@ const BudgetPlanner: React.FC<BudgetPlannerProps> = ({ transactions, debts, budg
   // Editing state for categories
   const [editingCategory, setEditingCategory] = useState<string | null>(null);
   const [editAmount, setEditAmount] = useState<string>('');
+  
+  // State for success feedback
+  const [savedCategory, setSavedCategory] = useState<string | null>(null);
 
   // Filter out income-specific categories for budgeting
   const expenseCategories = useMemo(() => 
@@ -76,6 +79,8 @@ const BudgetPlanner: React.FC<BudgetPlannerProps> = ({ transactions, debts, budg
     const limit = parseFloat(editAmount);
     if (!isNaN(limit) && limit >= 0) {
       onUpdateBudget(category, limit);
+      setSavedCategory(category);
+      setTimeout(() => setSavedCategory(null), 2000);
     }
     setEditingCategory(null);
   };
@@ -180,9 +185,16 @@ const BudgetPlanner: React.FC<BudgetPlannerProps> = ({ transactions, debts, budg
                         />
                         <button 
                           onClick={() => saveBudget(cat)}
-                          className="p-1.5 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+                          className="p-1.5 bg-indigo-600 text-white rounded hover:bg-indigo-700 relative"
                         >
                           <Check size={16} />
+                          {savedCategory === cat && (
+                            <span className="absolute inset-0 flex items-center justify-center bg-green-500 text-white rounded transition-opacity duration-300">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              </svg>
+                            </span>
+                          )}
                         </button>
                       </div>
                     ) : (
