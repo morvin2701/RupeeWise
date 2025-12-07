@@ -1,5 +1,4 @@
 {
-  "projectName": "rupeewise-budget-planner-morvin",
   "rewrites": [
     {
       "source": "/(.*)",
