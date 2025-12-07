@@ -2,12 +2,11 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Dashboard from './components/Dashboard';
 import Transactions from './components/Transactions';
 import DebtManager from './components/DebtManager';
-import AIInsights from './components/AIInsights';
 import BudgetPlanner from './components/BudgetPlanner';
 import { Transaction, Debt, SummaryData, Budget } from './types';
-import { LayoutDashboard, Receipt, Users, BrainCircuit, Menu, X, IndianRupee, Target, Download, Upload, Save } from 'lucide-react';
+import { LayoutDashboard, Receipt, Users, Menu, X, IndianRupee, Target, Download, Upload, Save } from 'lucide-react';
 
-type Tab = 'dashboard' | 'transactions' | 'debts' | 'budget' | 'ai';
+type Tab = 'dashboard' | 'transactions' | 'debts' | 'budget';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
@@ -151,8 +150,6 @@ const App: React.FC = () => {
         return <DebtManager debts={debts} onAddDebt={handleAddDebt} onTogglePaid={handleToggleDebtPaid} onDeleteDebt={handleDeleteDebt} />;
       case 'budget':
         return <BudgetPlanner transactions={transactions} debts={debts} budgets={budgets} onUpdateBudget={handleUpdateBudget} />;
-      case 'ai':
-        return <AIInsights transactions={transactions} debts={debts} />;
       default:
         return <Dashboard transactions={transactions} summary={summary} />;
     }
@@ -203,7 +200,6 @@ const App: React.FC = () => {
             <NavItem tab="transactions" icon={Receipt} label="Transactions" />
             <NavItem tab="budget" icon={Target} label="Budget Planner" />
             <NavItem tab="debts" icon={Users} label="Debts & Loans" />
-            <NavItem tab="ai" icon={BrainCircuit} label="AI Advisor" />
           </nav>
 
           <div className="mt-auto pt-6 border-t border-gray-100">
@@ -265,7 +261,7 @@ const App: React.FC = () => {
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center justify-between mb-8">
                <h2 className="text-2xl font-bold text-gray-800 capitalize">
-                 {activeTab === 'ai' ? 'AI Advisor' : activeTab.replace('-', ' ')}
+                 {activeTab.replace('-', ' ')}
                </h2>
                <div className="hidden sm:block text-sm text-gray-500">
                   {new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
